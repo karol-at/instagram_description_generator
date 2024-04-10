@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Utils/appstate.dart';
+import 'Pages/main_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,17 +21,18 @@ class _MainAppState extends State<MainApp> {
   
   @override
   Widget build(BuildContext context) {
-
+      var themeData = ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.light)
+        );
     
     Widget page;
-    page = const Placeholder();
+    page = HomePage(theme: themeData,);
+    
     return ChangeNotifierProvider(
       create:(context) => MyAppState(),
       child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.light)
-        ),
+        theme: themeData,
         home: Scaffold(
             body: page,
               bottomNavigationBar:  NavigationBar(
