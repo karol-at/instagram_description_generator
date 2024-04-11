@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 
 class HomePage extends StatefulWidget {
-  DataHandler dataHandler;
-  int dropdownValue = 0;
-  HomePage({super.key, required ThemeData theme, required this.dataHandler,});
+  final DataHandler dataHandler;
+  final int dropdownValue = 0;
+  const HomePage({super.key, required ThemeData theme, required this.dataHandler,});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(padding: const EdgeInsets.all(20),
             child: DropdownButton<String>(
-                hint: Text('Select a camera'),
+                hint: const Text('Select a camera'),
                 onChanged: (String? newValue) {
                   setState(() {
                   });

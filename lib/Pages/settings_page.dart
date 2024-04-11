@@ -1,12 +1,11 @@
 library settings_page;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 
 class SettingsPage extends StatefulWidget {
-  DataHandler dataHandler;
-  TextEditingController newCamera = TextEditingController();
+  final DataHandler dataHandler;
+  final TextEditingController newCamera = TextEditingController();
   SettingsPage({super.key, required ThemeData theme, required this.dataHandler});
 
   @override
