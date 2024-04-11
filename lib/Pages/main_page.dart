@@ -1,21 +1,30 @@
 library main_page;
+
 import 'package:flutter/material.dart';
+import 'package:instagram_description_generator/Utils/list_loader.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key, required ThemeData theme}) : super(key: key);
+class HomePage extends StatefulWidget {
+  DataHandler dataHandler;
+  int dropdownValue = 0;
+  HomePage({super.key, required ThemeData theme, required this.dataHandler,});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const  Text('Home Page'),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           
           children: [
-            Padding(
-              padding: EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(20),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Title'
@@ -23,7 +32,21 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            
+            Padding(padding: const EdgeInsets.all(20),
+            child: DropdownButton<String>(
+                hint: Text('Select a camera'),
+                onChanged: (String? newValue) {
+                  setState(() {
+                  });
+                },
+                items: widget.dataHandler.cameraList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList()
+              ),
+            )
           ],
         ),
       ),
