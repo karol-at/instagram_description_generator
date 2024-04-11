@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:instagram_description_generator/Pages/settings_page.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 import 'package:provider/provider.dart';
 import 'Utils/appstate.dart';
@@ -34,7 +35,18 @@ class _MainAppState extends State<MainApp> {
         );
     
     Widget page;
-    page = HomePage(theme: themeData,);
+    switch (currentPageIndex) {
+      case 0:
+        page = HomePage(theme: themeData, dataHandler: dataHandler);
+      case 1:
+        page = const Placeholder();
+      case 2:
+        page = const Placeholder();
+      case 3:
+        page = SettingsPage(theme: themeData, dataHandler: dataHandler);
+      default:
+        page = const Placeholder();
+    }
     
     return ChangeNotifierProvider(
       create:(context) => MyAppState(),
@@ -63,7 +75,9 @@ class _MainAppState extends State<MainApp> {
                 ],
                 selectedIndex: currentPageIndex,
                 onDestinationSelected: (index) {
-                  currentPageIndex = index;
+                  setState(() {
+                    currentPageIndex = index;
+                  });
                 },
               )
         ),
