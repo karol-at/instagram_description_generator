@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Pages/settings_page.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 import 'package:provider/provider.dart';
-import 'Utils/appstate.dart';
+import 'Utils/description_creator.dart';
 import 'Pages/main_page.dart';
 
 DataHandler startupDataHandler = DataHandler();
@@ -85,4 +85,7 @@ class _MainAppState extends State<MainApp> {
       ),
     );
   }
+}
+
+class MyAppState extends ChangeNotifier{
 }
