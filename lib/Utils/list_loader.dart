@@ -26,7 +26,7 @@ class DataHandler{
   return;
   }
 
-  void loadAllLists() async {
+  Future<void> loadAllLists() async {
   cameraList = await loadList('cameraList');
   lensList = await loadList('lensList');
   tagsList = await loadList('tagsList');

@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import 'Utils/appstate.dart';
 import 'Pages/main_page.dart';
 
-void main() {
+DataHandler startupDataHandler = DataHandler();
+void main() async {
+  await startupDataHandler.loadAllLists();
   runApp(const MainApp());
 }
 
@@ -20,12 +22,11 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   
   int currentPageIndex = 0;
-  DataHandler dataHandler = DataHandler();
+  DataHandler dataHandler = startupDataHandler;
 
   @override
   void initState() {
     super.initState();
-    dataHandler.loadAllLists();
   }
   @override
   Widget build(BuildContext context) {
