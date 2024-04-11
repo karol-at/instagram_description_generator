@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:instagram_description_generator/Utils/list_loader.dart';
 import 'package:provider/provider.dart';
 import 'Utils/appstate.dart';
 import 'Pages/main_page.dart';
@@ -18,7 +19,13 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   
   int currentPageIndex = 0;
-  
+  DataHandler dataHandler = DataHandler();
+
+  @override
+  void initState() {
+    super.initState();
+    dataHandler.loadAllLists();
+  }
   @override
   Widget build(BuildContext context) {
       var themeData = ThemeData(
