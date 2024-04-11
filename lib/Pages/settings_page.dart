@@ -1,12 +1,12 @@
 library settings_page;
 
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 
 class SettingsPage extends StatefulWidget {
   DataHandler dataHandler;
-  String newCamera = '';
+  TextEditingController newCamera = TextEditingController();
   SettingsPage({super.key, required ThemeData theme, required this.dataHandler});
 
   @override
@@ -25,8 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
-            child: const Padding(
-              padding: EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -34,21 +34,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: SizedBox(
                       
                       height: 50,
-                      child: const TextField(
-                        
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: widget.newCamera,
+                        decoration: const InputDecoration(
                           hintText: 'Add a camera',
                           
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 50,
                     height: 50,
                     child: IconButton(
                       onPressed: addCamera,
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       
                     ),
                   )
@@ -60,9 +60,12 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
-  static void addCamera() {
-  
-  
+  void addCamera() {
+    widget.dataHandler.cameraList.add(widget.newCamera.text);
+    widget.newCamera.clear();
+    setState(() {
+    });
+    widget.dataHandler.saveList(widget.dataHandler.cameraList, 'cameraList');
   }
 }
 
