@@ -48,13 +48,13 @@ class DataHandler{
     List<Tag> output = [];
     List<String> tempTagsList = await loadList('tagsList');
     List<String> tempHashtagsList = await loadList('tagHashtagsList');
-    for (int i = 0; i < tagsList.length; i++) {
+    for (int i = 0; i < tempTagsList.length; i++) {
       output.add(Tag(tag: tempTagsList[i], hashtag: tempHashtagsList[i]));
     }
     return output;
   }
 
-  Future<void> saveTagsList(List<Tag> tagsList) async {
+  Future<void> saveTagsList() async {
     List<String> tempTagsList = [];
     List<String> tempHashtagsList = [];
     for (Tag tag in tagsList) {
