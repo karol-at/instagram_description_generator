@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:instagram_description_generator/Pages/settings_page.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 import 'package:provider/provider.dart';
-import 'Utils/description_creator.dart';
 import 'Pages/main_page.dart';
+import 'Pages/hashtags_page.dart';
+import 'Pages/tags_page.dart';
+import 'Pages/settings_page.dart';
+import 'fonts/iconic_icons.dart';
 
 DataHandler startupDataHandler = DataHandler();
 void main() async {
@@ -40,9 +42,9 @@ class _MainAppState extends State<MainApp> {
       case 0:
         page = HomePage(theme: themeData, dataHandler: dataHandler);
       case 1:
-        page = const Placeholder();
+        page = HashtagsPage(theme: themeData, dataHandler: dataHandler);
       case 2:
-        page = const Placeholder();
+        page = TagsPage(theme: themeData, dataHandler: dataHandler);
       case 3:
         page = SettingsPage(theme: themeData, dataHandler: dataHandler);
       default:
@@ -58,19 +60,19 @@ class _MainAppState extends State<MainApp> {
               bottomNavigationBar:  NavigationBar(
                 destinations:  const [
                   NavigationDestination(
-                    icon: Icon(Icons.home),
+                    icon: Icon(IconicIcons.home),
                     label: 'Home',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.search),
-                    label: 'Search',
+                    icon: Icon(IconicIcons.hash),
+                    label: 'Hashtags',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.favorite),
-                    label: 'Favorites',
+                    icon: Icon(IconicIcons.at),
+                    label: 'Tags',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(IconicIcons.cog),
                     label: 'Settings',
                   ),
                 ],
