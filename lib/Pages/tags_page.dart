@@ -18,6 +18,8 @@ class _TagsPageState extends State<TagsPage> {
 
   TextEditingController tagController = TextEditingController();
   TextEditingController relatedHashtagController = TextEditingController();
+  List<bool> checkboxValue = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +66,7 @@ class _TagsPageState extends State<TagsPage> {
             child: ListView.builder(
               itemCount: widget.dataHandler.tagsList.length,
               itemBuilder: (context, index) {
+                checkboxValue.add(false);
                 return ListTile(
                   title: Row(
                     children: [
@@ -87,10 +90,15 @@ class _TagsPageState extends State<TagsPage> {
                                 });
                               },
                             ),
+                            Checkbox(value: checkboxValue[index],
+                            onChanged: (bool? value) {
+                              onChanged(value, index);}
+                            )
                           ],
                         ),
                       )
                     ],
+
                   ),
                 );
               },
@@ -102,14 +110,19 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   void addTag() {
-                  widget.dataHandler.tagsList.add(Tag(
-                    tag: tagController.text,
-                      hashtag: relatedHashtagController.text,
-                    ));
-                    tagController.clear();
-                    relatedHashtagController.clear();
-                    widget.dataHandler.saveTagsList();
-                    setState(() {                          
-                    });
-                  }
+    widget.dataHandler.tagsList.add(Tag(
+      tag: tagController.text,
+      hashtag: relatedHashtagController.text,
+    ));
+    tagController.clear();
+    relatedHashtagController.clear();
+    widget.dataHandler.saveTagsList();
+    setState(() {                          
+    });
+  }
+  void onChanged(bool? value , int index) {
+    setState(() {
+      checkboxValue[index] = value!;
+    });
+  }
 }
