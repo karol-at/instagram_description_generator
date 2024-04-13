@@ -2,6 +2,7 @@ library tags_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
+import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 
 class TagsPage extends StatefulWidget {
   final ThemeData theme;
@@ -36,6 +37,7 @@ class _TagsPageState extends State<TagsPage> {
                         prefix: Text('@'),
                       ),
                       controller: tagController,
+                      onEditingComplete: addTag,
                     ),
                     TextField(
                       decoration: const InputDecoration(
@@ -43,6 +45,7 @@ class _TagsPageState extends State<TagsPage> {
                         prefix: Text('#'),
                       ),
                       controller: relatedHashtagController,
+                      onEditingComplete: addTag,
                     ),
                     
                   ],
@@ -50,21 +53,10 @@ class _TagsPageState extends State<TagsPage> {
               ),
               SizedBox(
                 width: 50,
-                child: ElevatedButton(
-                      onPressed: () {
-                        widget.dataHandler.tagsList.add(Tag(
-                          tag: tagController.text,
-                          hashtag: relatedHashtagController.text,
-                        ));
-                        tagController.clear();
-                        relatedHashtagController.clear();
-                        widget.dataHandler.saveTagsList(widget.dataHandler.tagsList);
-                        setState(() {
-                          
-                        });
-                      },
-                      child: const Text('Add'),
-                    ),
+                child: IconButton(
+                  onPressed: addTag,
+                  icon: const Icon(IconicIcons.plus),
+                ),
               ),
             ],
           ),
@@ -73,7 +65,33 @@ class _TagsPageState extends State<TagsPage> {
               itemCount: widget.dataHandler.tagsList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('@${widget.dataHandler.tagsList[index].tag}'),
+                  title: Row(
+                    children: [
+                      Expanded(child: Text('@${widget.dataHandler.tagsList[index].tag}')),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: widget.theme.colorScheme.primary,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(IconicIcons.trash),
+                              onPressed: (){
+                                widget.dataHandler.tagsList.removeAt(index);
+                                widget.dataHandler.saveTagsList();
+                                setState(() {                          
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),
@@ -82,4 +100,16 @@ class _TagsPageState extends State<TagsPage> {
       ),
     );
   }
+
+  void addTag() {
+                  widget.dataHandler.tagsList.add(Tag(
+                    tag: tagController.text,
+                      hashtag: relatedHashtagController.text,
+                    ));
+                    tagController.clear();
+                    relatedHashtagController.clear();
+                    widget.dataHandler.saveTagsList();
+                    setState(() {                          
+                    });
+                  }
 }
