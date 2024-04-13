@@ -56,33 +56,33 @@ class _MainAppState extends State<MainApp> {
       child: MaterialApp(
         theme: themeData,
         home: Scaffold(
-            body: page,
-              bottomNavigationBar:  NavigationBar(
-                destinations:  const [
-                  NavigationDestination(
-                    icon: Icon(IconicIcons.home),
-                    label: 'Home',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(IconicIcons.hash),
-                    label: 'Hashtags',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(IconicIcons.at),
-                    label: 'Tags',
-                  ),
-                  NavigationDestination(
-                    icon: Icon(IconicIcons.cog),
-                    label: 'Settings',
-                  ),
-                ],
-                selectedIndex: currentPageIndex,
-                onDestinationSelected: (index) {
-                  setState(() {
-                    currentPageIndex = index;
-                  });
-                },
-              )
+          body: page,
+          bottomNavigationBar:  NavigationBar(
+            destinations:  const [
+              NavigationDestination(
+                icon: Icon(IconicIcons.home),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(IconicIcons.hash),
+                label: 'Hashtags',
+              ),
+              NavigationDestination(
+                icon: Icon(IconicIcons.at),
+                label: 'Tags',
+              ),
+              NavigationDestination(
+                icon: Icon(IconicIcons.cog),
+                label: 'Settings',
+              ),
+            ],
+            selectedIndex: currentPageIndex,
+            onDestinationSelected: (index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+          )
         ),
       ),
     );
