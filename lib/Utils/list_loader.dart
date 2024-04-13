@@ -15,24 +15,22 @@ class DataHandler{
 
 
   void saveList (List<String> list, String listName) async {
-  final path = await getLocalJsonPath(listName);
-  if (list.isEmpty) {
+    final path = await getLocalJsonPath(listName);
+    if (list.isEmpty) {
+      return;
+    }
+    final file = File(path);
+    final data = jsonEncode(list);
+    file.writeAsString(data);
     return;
   }
 
-
-  final file = File(path);
-  final data = jsonEncode(list);
-  file.writeAsString(data);
-  return;
-  }
-
   Future<void> loadAllLists() async {
-  cameraList = await loadList('cameraList');
-  lensList = await loadList('lensList');
-  tagsList = await loadTagsList();
-  categoryList = await loadList('categoryList');
-  hashtagList = await loadHashtagList();
+    cameraList = await loadList('cameraList');
+    lensList = await loadList('lensList');
+    tagsList = await loadTagsList();
+    categoryList = await loadList('categoryList');
+    hashtagList = await loadHashtagList();
   }
 
   Future<List<List<String>>> loadHashtagList() async {
