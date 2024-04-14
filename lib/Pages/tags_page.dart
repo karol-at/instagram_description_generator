@@ -37,7 +37,7 @@ class _TagsPageState extends State<TagsPage> {
                           prefix: Text('@'),
                         ),
                         controller: tagController,
-                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController);},
+                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController); setState(() {});},
                       ),
                       TextField(
                         decoration: const InputDecoration(
@@ -45,7 +45,7 @@ class _TagsPageState extends State<TagsPage> {
                           prefix: Text('#'),
                         ),
                         controller: relatedHashtagController,
-                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController);}
+                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController); setState(() {});}
                       ),
                       
                     ],
@@ -54,7 +54,7 @@ class _TagsPageState extends State<TagsPage> {
                 SizedBox(
                   width: 50,
                   child: IconButton(
-                    onPressed: (){data.dataHandler.addTag(tagController, relatedHashtagController);},
+                    onPressed: (){data.dataHandler.addTag(tagController, relatedHashtagController); setState(() {});},
                     icon: const Icon(IconicIcons.plus),
                   ),
                 ),
@@ -87,14 +87,16 @@ class _TagsPageState extends State<TagsPage> {
                                 },
                               ),
                               Checkbox(value: data.dataHandler.tagsList[index].selected,
-                              onChanged: (bool? value) {
+                              onChanged: (bool? value) {                             
+                                setState(() {
+                                  data.dataHandler.tagsList[index].selected = value!;
+                                });
                                 }
                               )
                             ],
                           ),
                         )
                       ],
-      
                     ),
                   );
                 },
