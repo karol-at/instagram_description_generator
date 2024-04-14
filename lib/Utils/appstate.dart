@@ -1,4 +1,4 @@
-library MyAppState;
+library appstate;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/description_creator.dart';
@@ -14,6 +14,11 @@ class MyAppState extends ChangeNotifier{
     hashtags: [],
   );
   MyAppState() {
-    dataHandler.loadAllLists();
+    loadData();
+  }
+
+  void loadData() async {
+    await dataHandler.loadAllLists();
+    notifyListeners();
   }
 }
