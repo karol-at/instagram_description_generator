@@ -36,7 +36,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
       var themeData = ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange, brightness: Brightness.light)
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
         );
     
     Widget page;

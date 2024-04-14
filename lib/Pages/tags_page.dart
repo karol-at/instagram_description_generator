@@ -34,7 +34,7 @@ class _TagsPageState extends State<TagsPage> {
                       TextField(
                         decoration: const InputDecoration(
                           hintText: 'Add a tag',
-                          prefix: Text('@'),
+                          prefix: SizedBox(width: 15, child: Text('@')),
                         ),
                         controller: tagController,
                         onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController); setState(() {});},
@@ -42,12 +42,11 @@ class _TagsPageState extends State<TagsPage> {
                       TextField(
                         decoration: const InputDecoration(
                           hintText: 'Add a related hashtag',
-                          prefix: Text('#'),
+                          prefix: SizedBox(width: 15, child: Text('#')),
                         ),
                         controller: relatedHashtagController,
                         onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController); setState(() {});}
                       ),
-                      
                     ],
                   ),
                 ),
@@ -69,8 +68,8 @@ class _TagsPageState extends State<TagsPage> {
                       children: [
                         Expanded(child: Text('@${data.dataHandler.tagsList[index].tag}')),
                         Container(
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               bottomLeft: Radius.circular(10),
                             ),
