@@ -9,12 +9,12 @@ import 'Pages/settings_page.dart';
 import 'Utils/appstate.dart';
 import 'fonts/iconic_icons.dart';
 
-DataHandler startupDataHandler = DataHandler();
 void main() async {
-  await startupDataHandler.loadAllLists();
   runApp(ChangeNotifierProvider(
-  create: (context) => MyAppState(),
-  child:  MainApp()));
+      create: (context) => MyAppState(),
+      child: const MainApp()
+    )
+  );
 }
 
 class MainApp extends StatefulWidget {
@@ -27,7 +27,6 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   
   int currentPageIndex = 0;
-  DataHandler dataHandler = startupDataHandler;
 
   @override
   void initState() {
