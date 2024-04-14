@@ -33,26 +33,32 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Padding(padding: const EdgeInsets.all(20),
-              child: DropdownButton<String>(
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: DropdownButton<String>(
+                  value: state.descriptionCreator.camera.isNotEmpty ? state.descriptionCreator.camera : null,
                   hint: const Text('Select a camera'),
                   onChanged: (String? newValue) {
                     setState(() {
+                      state.descriptionCreator.camera = newValue!;
                     });
                   },
                   items: state.dataHandler.cameraList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
-                    );
+                   );
                   }).toList()
                 ),
               ),
-              Padding(padding: const EdgeInsets.all(20),
-              child: DropdownButton<String>(
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: DropdownButton<String>(
+                  value: state.descriptionCreator.lens.isNotEmpty ? state.descriptionCreator.lens : null,
                   hint: const Text('Select a lens'),
                   onChanged: (String? newValue) {
                     setState(() {
+                      state.descriptionCreator.lens = newValue!;
                     });
                   },
                   items: state.dataHandler.lensList.map<DropdownMenuItem<String>>((String value) {
@@ -64,12 +70,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(padding: const EdgeInsets.all(20),
-              child: ElevatedButton(
-                onPressed: () {
-                  state.descriptionCreator.getFullDescription();
-                },
-                child: const Text('Generate Description'),
-              ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    state.descriptionCreator.getFullDescription();
+                  },
+                  child: const Text('Generate Description'),
+                ),
               )
             ],
           ),
