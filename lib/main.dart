@@ -6,12 +6,15 @@ import 'Pages/main_page.dart';
 import 'Pages/hashtags_page.dart';
 import 'Pages/tags_page.dart';
 import 'Pages/settings_page.dart';
+import 'Utils/appstate.dart';
 import 'fonts/iconic_icons.dart';
 
 DataHandler startupDataHandler = DataHandler();
 void main() async {
   await startupDataHandler.loadAllLists();
-  runApp(const MainApp());
+  runApp(ChangeNotifierProvider(
+  create: (context) => MyAppState(),
+  child:  MainApp()));
 }
 
 class MainApp extends StatefulWidget {
@@ -40,13 +43,13 @@ class _MainAppState extends State<MainApp> {
     Widget page;
     switch (currentPageIndex) {
       case 0:
-        page = HomePage(theme: themeData, dataHandler: dataHandler);
+        page = const HomePage();
       case 1:
-        page = HashtagsPage(theme: themeData, dataHandler: dataHandler);
+        page = const HashtagsPage();
       case 2:
-        page = TagsPage(theme: themeData, dataHandler: dataHandler);
+        page = const TagsPage();
       case 3:
-        page = SettingsPage(theme: themeData, dataHandler: dataHandler);
+        page = const SettingsPage();
       default:
         page = const Placeholder();
     }
@@ -87,7 +90,4 @@ class _MainAppState extends State<MainApp> {
       ),
     );
   }
-}
-
-class MyAppState extends ChangeNotifier{
 }

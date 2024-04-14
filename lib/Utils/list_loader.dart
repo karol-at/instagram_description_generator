@@ -2,6 +2,7 @@ library data_handler;
 
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -13,6 +14,20 @@ class DataHandler{
   List<String> categoryList = [];
   List<List<String>> hashtagList = [];
 
+  void addTag(TextEditingController tagController, TextEditingController relatedHashtagController) {
+    if (tagController.text.isNotEmpty) {
+      tagsList.add(Tag(tag: tagController.text, hashtag: relatedHashtagController.text));
+      saveTagsList();
+      tagController.clear();
+      relatedHashtagController.clear();
+    }
+  }
+
+  
+  void addCamera( TextEditingController newCamera) {
+    cameraList.add(newCamera.text);
+    saveList(cameraList, 'cameraList');
+  }
 
   void saveList (List<String> list, String listName) async {
     final path = await getLocalJsonPath(listName);
@@ -83,6 +98,7 @@ class DataHandler{
 class Tag {
   String tag;
   String hashtag;
+  bool selected = false;
   Tag({required this.tag, this.hashtag = ''})
   {
     if (hashtag == '') {

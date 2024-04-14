@@ -1,14 +1,12 @@
 library tags_page;
 
 import 'package:flutter/material.dart';
-import 'package:instagram_description_generator/Utils/list_loader.dart';
+import 'package:instagram_description_generator/Utils/appstate.dart';
 import 'package:instagram_description_generator/fonts/iconic_icons.dart';
+import 'package:provider/provider.dart';
 
 class TagsPage extends StatefulWidget {
-  final ThemeData theme;
-  final DataHandler dataHandler;
-
-  const TagsPage({super.key, required this.theme, required this.dataHandler});
+  const TagsPage({super.key,});
 
   @override
   State<TagsPage> createState() => _TagsPageState();
@@ -18,111 +16,93 @@ class _TagsPageState extends State<TagsPage> {
 
   TextEditingController tagController = TextEditingController();
   TextEditingController relatedHashtagController = TextEditingController();
-  List<bool> checkboxValue = [];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tags'),
-      ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Add a tag',
-                        prefix: Text('@'),
-                      ),
-                      controller: tagController,
-                      onEditingComplete: addTag,
-                    ),
-                    TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Add a related hashtag',
-                        prefix: Text('#'),
-                      ),
-                      controller: relatedHashtagController,
-                      onEditingComplete: addTag,
-                    ),
-                    
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: IconButton(
-                  onPressed: addTag,
-                  icon: const Icon(IconicIcons.plus),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.dataHandler.tagsList.length,
-              itemBuilder: (context, index) {
-                checkboxValue.add(false);
-                return ListTile(
-                  title: Row(
+    return Consumer<MyAppState>(
+      builder: (context, data, child) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Tags'),
+        ),
+        body: Column( 
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
                     children: [
-                      Expanded(child: Text('@${widget.dataHandler.tagsList[index].tag}')),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: widget.theme.colorScheme.primary,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
+                      TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Add a tag',
+                          prefix: Text('@'),
                         ),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(IconicIcons.trash),
-                              onPressed: (){
-                                widget.dataHandler.tagsList.removeAt(index);
-                                widget.dataHandler.saveTagsList();
-                                setState(() {                          
-                                });
-                              },
-                            ),
-                            Checkbox(value: checkboxValue[index],
-                            onChanged: (bool? value) {
-                              onChanged(value, index);}
-                            )
-                          ],
+                        controller: tagController,
+                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController);},
+                      ),
+                      TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Add a related hashtag',
+                          prefix: Text('#'),
                         ),
-                      )
+                        controller: relatedHashtagController,
+                        onEditingComplete: (){data.dataHandler.addTag(tagController, relatedHashtagController);}
+                      ),
+                      
                     ],
-
                   ),
-                );
-              },
+                ),
+                SizedBox(
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){data.dataHandler.addTag(tagController, relatedHashtagController);},
+                    icon: const Icon(IconicIcons.plus),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: data.dataHandler.tagsList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Row(
+                      children: [
+                        Expanded(child: Text('@${data.dataHandler.tagsList[index].tag}')),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(IconicIcons.trash),
+                                onPressed: (){
+                                  data.dataHandler.tagsList.removeAt(index);
+                                  data.dataHandler.saveTagsList();
+                                  setState(() {                          
+                                  });
+                                },
+                              ),
+                              Checkbox(value: data.dataHandler.tagsList[index].selected,
+                              onChanged: (bool? value) {
+                                }
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+      
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  void addTag() {
-    widget.dataHandler.tagsList.add(Tag(
-      tag: tagController.text,
-      hashtag: relatedHashtagController.text,
-    ));
-    tagController.clear();
-    relatedHashtagController.clear();
-    widget.dataHandler.saveTagsList();
-    setState(() {                          
-    });
-  }
-  void onChanged(bool? value , int index) {
-    setState(() {
-      checkboxValue[index] = value!;
-    });
   }
 }
