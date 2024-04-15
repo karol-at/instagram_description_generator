@@ -23,12 +23,6 @@ class DataHandler{
     }
   }
 
-  
-  void addCamera( TextEditingController newCamera) {
-    cameraList.add(newCamera.text);
-    saveList(cameraList, 'cameraList');
-  }
-
   void saveList (List<String> list, String listName) async {
     final path = await getLocalJsonPath(listName);
     if (list.isEmpty) {
