@@ -20,7 +20,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MyAppState>(
-      builder: (context, data, child) => Scaffold(
+      builder: (context, state, child) => Scaffold(
         appBar: AppBar(
           title: const Text('Hashtags'),
         ),
@@ -29,7 +29,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
             
             Expanded(
               child: ListView.builder(
-                itemCount: data.dataHandler.categoryList.length,
+                itemCount: state.dataHandler.categoryList.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.all(10),
@@ -42,11 +42,11 @@ class _HashtagsPageState extends State<HashtagsPage> {
                       children: [
                         Container(
                           margin: const EdgeInsets.all(10),
-                          child: Text(data.dataHandler.categoryList[index], style: Theme.of(context).textTheme.titleMedium,)
+                          child: Text(state.dataHandler.categoryList[index], style: Theme.of(context).textTheme.titleMedium,)
                           ),
                         Wrap(
                           children: [
-                            for (String hashtag in data.dataHandler.hashtagList[index])
+                            for (String hashtag in state.dataHandler.hashtagList[index])
                               Container(
                                 padding: const EdgeInsets.all(8.0),
                                 margin: const EdgeInsets.all(5),
@@ -90,16 +90,16 @@ class _HashtagsPageState extends State<HashtagsPage> {
                     if (categoryController.text.isEmpty || hashtagController.text.isEmpty) {
                       return;
                     }
-                    if (!data.dataHandler.categoryList.contains(categoryController.text)) {
-                      data.dataHandler.categoryList.add(categoryController.text);
-                      data.dataHandler.saveList(data.dataHandler.categoryList, 'categoryList');
-                      data.dataHandler.hashtagList.add([]);
+                    if (!state.dataHandler.categoryList.contains(categoryController.text)) {
+                      state.dataHandler.categoryList.add(categoryController.text);
+                      state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
+                      state.dataHandler.hashtagList.add([]);
                     }
-                    int index = data.dataHandler.categoryList.indexOf(categoryController.text);
-                    if (!data.dataHandler.hashtagList[index].contains(hashtagController.text)) {
-                      data.dataHandler.hashtagList[index].add(hashtagController.text);
+                    int index = state.dataHandler.categoryList.indexOf(categoryController.text);
+                    if (!state.dataHandler.hashtagList[index].contains(hashtagController.text)) {
+                      state.dataHandler.hashtagList[index].add(hashtagController.text);
                     }
-                    data.dataHandler.saveList(data.dataHandler.hashtagList[index], data.dataHandler.categoryList[index]);
+                    state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
                     Navigator.of(context).pop();
                     setState(() {
                       
