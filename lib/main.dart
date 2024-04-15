@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:instagram_description_generator/Utils/list_loader.dart';
 import 'package:provider/provider.dart';
 import 'Pages/main_page.dart';
 import 'Pages/hashtags_page.dart';
