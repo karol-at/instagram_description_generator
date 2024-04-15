@@ -15,6 +15,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
 
   TextEditingController newCamera = TextEditingController();
+  TextEditingController newLens = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +52,46 @@ class _SettingsPageState extends State<SettingsPage> {
                       height: 50,
                       child: IconButton(
                         onPressed: (){
-                          state.dataHandler.addCamera(newCamera);
+                          state.dataHandler.cameraList.add(newCamera.text);
+                          state.dataHandler.saveList(state.dataHandler.cameraList, 'cameraList');
                           newCamera.clear();
+                        },
+                        icon: const Icon(Icons.add),
+                        
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        
+                        height: 50,
+                        child: TextField(
+                          controller: newLens,
+                          decoration: const InputDecoration(
+                            hintText: 'Add a lens',
+                            
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        onPressed: (){
+                          state.dataHandler.lensList.add(newLens.text);
+                          state.dataHandler.saveList(state.dataHandler.lensList, 'lensList');
+                          newLens.clear();
                         },
                         icon: const Icon(Icons.add),
                         
