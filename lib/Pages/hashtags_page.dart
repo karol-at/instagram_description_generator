@@ -60,9 +60,23 @@ class _HashtagsPageState extends State<HashtagsPage> {
                     ),
                     controller: hashtagController,
                   ),
-                  TextButton(onPressed: (){},
+                  TextButton(onPressed: (){
+                    if (categoryController.text.isEmpty || hashtagController.text.isEmpty) {
+                      return;
+                    }
+                    if (!data.dataHandler.categoryList.contains(categoryController.text)) {
+                      data.dataHandler.categoryList.add(categoryController.text);
+                      data.dataHandler.saveList(data.dataHandler.categoryList, 'categoryList');
+                      data.dataHandler.hashtagList.add([]);
+                    }
+                    int index = data.dataHandler.categoryList.indexOf(categoryController.text);
+                    if (!data.dataHandler.hashtagList[index].contains(hashtagController.text)) {
+                      data.dataHandler.hashtagList[index].add(hashtagController.text);
+                    }
+                    data.dataHandler.saveList(data.dataHandler.hashtagList[index], data.dataHandler.categoryList[index]);
+                  },
                    child: const Text('Add')
-                   )
+                  )
                 ],
               )
             );
