@@ -44,12 +44,12 @@ class DataHandler{
     cameraList = await loadList('cameraList');
     lensList = await loadList('lensList');
     tagsList = await loadTagsList();
-    categoryList = await loadList('categoryList');
     hashtagList = await loadHashtagList();
   }
 
   Future<List<List<String>>> loadHashtagList() async {
     List<List<String>> output = [];
+    categoryList = await loadList('categoryList');
     for (String list in categoryList) 
     {
       output.add(await loadList(list));
@@ -90,6 +90,9 @@ class DataHandler{
       return [];
     }
     final data = await file.readAsString();
+    if (data.isEmpty) {
+      return [];
+    }
     final list = List<String>.from(jsonDecode(data));
     return list;
   }
