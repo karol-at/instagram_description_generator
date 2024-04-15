@@ -56,6 +56,9 @@ class _TagsPageState extends State<TagsPage> {
                               onChanged: (bool? value) {                             
                                 setState(() {
                                   state.dataHandler.tagsList[index].selected = value!;
+                                  state.descriptionCreator.tags.contains(state.dataHandler.tagsList[index]) ?
+                                  state.descriptionCreator.tags.remove(state.dataHandler.tagsList[index]) :
+                                  state.descriptionCreator.tags.add(state.dataHandler.tagsList[index]);
                                 });
                                 }
                               )
