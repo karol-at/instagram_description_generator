@@ -13,6 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  TextEditingController titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyAppState>(
@@ -24,10 +27,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             
             children: [
-              const Padding(
-                padding: EdgeInsets.all(20),
+              Padding(
+                padding: const EdgeInsets.all(20),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: titleController,
+                  decoration: const InputDecoration(
                     hintText: 'Title'
       
                   ),
@@ -72,9 +76,21 @@ class _HomePageState extends State<HomePage> {
               Padding(padding: const EdgeInsets.all(20),
                 child: ElevatedButton(
                   onPressed: () {
-                    state.descriptionCreator.getFullDescription();
+                    state.descriptionCreator.title = titleController.text;
+                    state.fullDescription = state.descriptionCreator.getFullDescription();
+                    setState(() {});
                   },
                   child: const Text('Generate Description'),
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: TextEditingController(text: state.fullDescription),
+                  maxLines: 10,
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Description',
+                  ),
                 ),
               )
             ],

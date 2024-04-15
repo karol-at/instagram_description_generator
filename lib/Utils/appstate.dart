@@ -13,6 +13,7 @@ class MyAppState extends ChangeNotifier{
     tags: [],
     hashtags: [],
   );
+  String fullDescription = "";
   MyAppState() {
     loadData();
   }
