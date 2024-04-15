@@ -31,10 +31,36 @@ class _HashtagsPageState extends State<HashtagsPage> {
               child: ListView.builder(
                 itemCount: data.dataHandler.categoryList.length,
                 itemBuilder: (context, index) {
-                  return const Placeholder(
-                    fallbackHeight: 100,
-                    fallbackWidth: 100,)
-                  ;
+                  return Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Text(data.dataHandler.categoryList[index], style: Theme.of(context).textTheme.titleMedium,)
+                          ),
+                        Wrap(
+                          children: [
+                            for (String hashtag in data.dataHandler.hashtagList[index])
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                margin: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                child: Text('#$hashtag'),
+                              ),
+                          ],
+                        ),
+                      ],
+                    )
+                  );
                 },
               ),
             ),
@@ -74,6 +100,10 @@ class _HashtagsPageState extends State<HashtagsPage> {
                       data.dataHandler.hashtagList[index].add(hashtagController.text);
                     }
                     data.dataHandler.saveList(data.dataHandler.hashtagList[index], data.dataHandler.categoryList[index]);
+                    Navigator.of(context).pop();
+                    setState(() {
+                      
+                    });
                   },
                    child: const Text('Add')
                   )
