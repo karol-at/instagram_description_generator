@@ -34,6 +34,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                   return Container(
                     margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                      //TODO: figure out the color scheme
                       color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -47,6 +48,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                         Wrap(
                           children: [
                             for (String hashtag in state.dataHandler.hashtagList[index])
+                            //TODO: make this a button and figure out how to control selection
                               Container(
                                 padding: const EdgeInsets.all(8.0),
                                 margin: const EdgeInsets.all(5),
@@ -73,6 +75,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
               contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               children: [
                   TextField(
+                    //TODO: this probably should be a dropdown
                     decoration: const InputDecoration(
                       hintText: 'Category name',
                       prefix: SizedBox(width: 15),
