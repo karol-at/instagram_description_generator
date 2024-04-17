@@ -13,7 +13,8 @@ class MyAppState extends ChangeNotifier{
     tags: [],
     hashtags: [],
   );
-  String fullDescription = "";
+  TextEditingController titleController = TextEditingController();
+
   MyAppState() {
     loadData();
   }

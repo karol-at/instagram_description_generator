@@ -9,19 +9,19 @@ class Description {
   String lens;
   List<Tag> tags;
   List<String> hashtags;
+  String description = '';
 
   Description({required this.title, required this.camera, required this.lens, required this.tags, required this.hashtags});
 
-  String getFullDescription() {
-    String output = '$title\n\n';
-    output += '$camera + $lens\n\n';
+  void createDescription() {
+    description = '$title\n\n';
+    description += '$camera + $lens\n\n';
     for(String hashtag in hashtags) {
-      output += '#$hashtag ';
+      description += '#$hashtag ';
     }
-    output += '\n\n';
+    description += '\n\n';
     for(Tag tag in tags) {
-      output += '@${tag.tag} | #${tag.hashtag}\n';
+      description += '@${tag.tag} | #${tag.hashtag}\n';
     }
-    return output;
   }
 }

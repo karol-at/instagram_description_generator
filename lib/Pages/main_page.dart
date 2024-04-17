@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
               Padding(padding: const EdgeInsets.all(20),
                 child: ElevatedButton(
                   onPressed: () {
-                    state.descriptionCreator.title = titleController.text;
-                    state.fullDescription = state.descriptionCreator.getFullDescription();
+                    state.descriptionCreator.title = state.titleController.text;
+                    state.descriptionCreator.createDescription();
                     setState(() {});
                   },
                   child: const Text('Generate Description'),
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: TextField(
-                  controller: TextEditingController(text: state.fullDescription),
+                  controller: TextEditingController(text: state.descriptionCreator.description),
                   maxLines: 10,
                   readOnly: true,
                   decoration: const InputDecoration(
