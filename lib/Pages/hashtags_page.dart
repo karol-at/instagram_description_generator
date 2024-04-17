@@ -1,7 +1,6 @@
 library hashtags_page;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +15,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
 
   TextEditingController categoryController = TextEditingController();
   TextEditingController hashtagController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<MyAppState>(
@@ -31,13 +30,8 @@ class _HashtagsPageState extends State<HashtagsPage> {
               child: ListView.builder(
                 itemCount: state.dataHandler.categoryList.length,
                 itemBuilder: (context, index) {
-                  return Container(
+                  return Card(
                     margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      //TODO: figure out the color scheme
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -49,15 +43,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                           children: [
                             for (String hashtag in state.dataHandler.hashtagList[index])
                             //TODO: make this a button and figure out how to control selection
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                child: Text('#$hashtag'),
-                              ),
+                              HashtagBox(hashtag: hashtag),
                           ],
                         ),
                       ],
@@ -82,6 +68,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                     ),
                     controller: categoryController,
                   ),
+
                   TextField(
                     decoration: const InputDecoration(
                       hintText: 'Hashtag',
@@ -116,6 +103,30 @@ class _HashtagsPageState extends State<HashtagsPage> {
           },
           child: const Icon(Icons.add),
         ),
+      ),
+    );
+  }
+}
+
+class HashtagBox extends StatelessWidget {
+  const HashtagBox({
+    super.key,
+    required this.hashtag,
+  });
+
+  final String hashtag;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      color: theme.colorScheme.onPrimary,
+      margin: const EdgeInsets.all(4),
+      
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('#$hashtag'),
       ),
     );
   }
