@@ -15,7 +15,8 @@ class _HashtagsPageState extends State<HashtagsPage> {
 
   TextEditingController categoryController = TextEditingController();
   TextEditingController hashtagController = TextEditingController();
-  
+  bool addNewCategory = true;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyAppState>(
@@ -60,15 +61,32 @@ class _HashtagsPageState extends State<HashtagsPage> {
               title: const Text('Add a new hashtag'),
               contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               children: [
-                  TextField(
-                    //TODO: this probably should be a dropdown
+                  DropdownButton<String>(
+                    hint: const Text('Select a category'),
+                    items: state.dataHandler.categoryList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList() + const [
+                      DropdownMenuItem<String>(
+                        value: 'New category',
+                        child: Text('New category'),
+                      ),
+                    ],
+                    onChanged: (String? value) {
+                      addNewCategory = value == 'New category' ? true : false;
+                      setState(() {});
+                    },
+                  ),
+                  //TODO: figure out why this doesn't work
+                  addNewCategory ? TextField(
                     decoration: const InputDecoration(
-                      hintText: 'Category name',
+                      hintText: 'New category',
                       prefix: SizedBox(width: 15),
                     ),
                     controller: categoryController,
-                  ),
-
+                  ) : const SizedBox(),
                   TextField(
                     decoration: const InputDecoration(
                       hintText: 'Hashtag',
