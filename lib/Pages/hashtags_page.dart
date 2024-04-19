@@ -43,7 +43,6 @@ class _HashtagsPageState extends State<HashtagsPage> {
                         Wrap(
                           children: [
                             for (String hashtag in state.dataHandler.hashtagList[index])
-                            //TODO: make this a button and figure out how to control selection
                               HashtagBox(hashtag: hashtag),
                           ],
                         ),
@@ -138,13 +137,22 @@ class HashtagBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
-      color: theme.colorScheme.onPrimary,
-      margin: const EdgeInsets.all(4),
-      
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text('#$hashtag'),
+    return Consumer<MyAppState>(
+      builder: (context, state, child) => Padding(
+        padding: const EdgeInsets.all(5),
+        child: ElevatedButton(
+          //TODO: make the colors nicer
+          style: ElevatedButton.styleFrom(
+            backgroundColor: state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
+          ),
+          onPressed: (){
+            state.checkHahstag(hashtag);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('#$hashtag'),
+          ),
+        ),
       ),
     );
   }

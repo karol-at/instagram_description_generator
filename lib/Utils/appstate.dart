@@ -23,4 +23,13 @@ class MyAppState extends ChangeNotifier{
     await dataHandler.loadAllLists();
     notifyListeners();
   }
+
+  void checkHahstag(String hashtag) {
+    if(descriptionCreator.hashtags.contains(hashtag)) {
+      descriptionCreator.hashtags.remove(hashtag);
+    } else {
+      descriptionCreator.hashtags.add(hashtag);
+    }
+    notifyListeners();
+  }
 }
