@@ -141,9 +141,9 @@ class HashtagBox extends StatelessWidget {
       builder: (context, state, child) => Padding(
         padding: const EdgeInsets.all(5),
         child: ElevatedButton(
-          //TODO: make the colors nicer
+          //TODO: add remove buttton
           style: ElevatedButton.styleFrom(
-            backgroundColor: state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
+            backgroundColor: state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.secondaryContainer : theme.colorScheme.primaryContainer,
           ),
           onPressed: (){
             state.checkHahstag(hashtag);
