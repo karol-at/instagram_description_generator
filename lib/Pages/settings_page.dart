@@ -2,6 +2,7 @@ library settings_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
+import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
 
 
@@ -16,6 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   TextEditingController newCamera = TextEditingController();
   TextEditingController newLens = TextEditingController();
+  String? removeCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,37 @@ class _SettingsPageState extends State<SettingsPage> {
                     )
                   ],
                 ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Expanded(child: DropdownButton<String>(
+                    value: removeCamera,
+                    hint: const Text('Select a camera to remove'),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        removeCamera = newValue;
+                      });
+                    },
+                    items: state.dataHandler.cameraList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    )
+                  ),
+                  IconButton(
+                    onPressed:(){
+                      state.dataHandler.cameraList.remove(removeCamera);
+                      state.dataHandler.saveList(state.dataHandler.cameraList, 'cameraList');
+                      removeCamera = null;
+                    }, 
+                    icon: const Icon(IconicIcons.trash))
+                ],
               ),
             ),
             SizedBox(
