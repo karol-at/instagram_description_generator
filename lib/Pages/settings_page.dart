@@ -91,7 +91,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     onPressed:(){
                       state.dataHandler.cameraList.remove(removeCamera);
                       state.dataHandler.saveList(state.dataHandler.cameraList, 'cameraList');
-                      removeCamera = null;
+                      setState(() {
+                        removeCamera = null;
+                      });
                     }, 
                     icon: const Icon(IconicIcons.trash))
                 ],
