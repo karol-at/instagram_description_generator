@@ -14,6 +14,11 @@ class MyAppState extends ChangeNotifier{
     hashtags: [],
   );
   TextEditingController titleController = TextEditingController();
+  //TODO: Save selected color
+  ThemeData themeData = ThemeData(
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow, brightness: Brightness.dark),
+  );
 
   MyAppState() {
     loadData();

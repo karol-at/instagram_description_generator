@@ -33,11 +33,6 @@ class _MainAppState extends State<MainApp> {
   }
   @override
   Widget build(BuildContext context) {
-      var themeData = ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
-        );
-    
     Widget page;
     switch (currentPageIndex) {
       case 0:
@@ -52,10 +47,9 @@ class _MainAppState extends State<MainApp> {
         page = const Placeholder();
     }
     
-    return ChangeNotifierProvider(
-      create:(context) => MyAppState(),
-      child: MaterialApp(
-        theme: themeData,
+    return Consumer<MyAppState>(
+      builder: (context, state, child) => MaterialApp(
+        theme: state.themeData,
         home: Scaffold(
           body: page,
           bottomNavigationBar:  NavigationBar(

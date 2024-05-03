@@ -18,6 +18,15 @@ class _SettingsPageState extends State<SettingsPage> {
   TextEditingController newCamera = TextEditingController();
   TextEditingController newLens = TextEditingController();
   String? removeCamera;
+  final List<DropdownMenuItem<String>> colors = [
+  const DropdownMenuItem<String>(value: 'orange',child: Text('Orange')),
+  const DropdownMenuItem<String>(value: 'blue',child: Text('Blue')),
+  const DropdownMenuItem<String>(value: 'green',child: Text('Green')),
+  const DropdownMenuItem<String>(value: 'red',child: Text('Red')),
+  const DropdownMenuItem<String>(value: 'yellow',child: Text('Yellow')),
+  const DropdownMenuItem<String>(value: 'purple',child: Text('Purple')),
+  ];
+  String? color;
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +145,57 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+          DropdownButton(
+            items: colors, 
+            hint: const Text('Select a color'),
+            value: color,
+            onChanged: (String? newValue) {
+              color = newValue;
+            switch (newValue) {
+              
+              case 'orange':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange)
+                );
+                break;
+              case 'blue':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)
+                );
+                break;
+              case 'green':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)
+                );
+                break;
+              case 'red':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.red)
+                );
+                break;
+              case 'yellow':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow)
+                );
+                break;
+              case 'purple':
+                state.themeData = ThemeData(
+                  useMaterial3: true,
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple)
+                );
+                break;
+            }
+            //TODO: make the color change responsive
+            setState(() {
+              
+            });
+            }
+          )
           ],
         ),
       ),
