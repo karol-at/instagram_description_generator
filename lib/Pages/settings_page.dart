@@ -18,6 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   TextEditingController newCamera = TextEditingController();
   TextEditingController newLens = TextEditingController();
   String? removeCamera;
+  String? removeLens;
   final List<DropdownMenuItem<String>> colors = [
   const DropdownMenuItem<String>(value: 'orange',child: Text('Orange')),
   const DropdownMenuItem<String>(value: 'blue',child: Text('Blue')),
@@ -143,6 +144,39 @@ class _SettingsPageState extends State<SettingsPage> {
                     )
                   ],
                 ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Expanded(child: DropdownButton<String>(
+                    value: removeLens,
+                    hint: const Text('Select a lens to remove'),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        removeCamera = newValue;
+                      });
+                    },
+                    items: state.dataHandler.lensList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    )
+                  ),
+                  IconButton(
+                    onPressed:(){
+                      state.dataHandler.lensList.remove(removeLens);
+                      state.dataHandler.saveList(state.dataHandler.lensList, 'lensList');
+                      setState(() {
+                        removeLens = null;
+                      });
+                    }, 
+                    icon: const Icon(IconicIcons.trash))
+                ],
               ),
             ),
           DropdownButton(
