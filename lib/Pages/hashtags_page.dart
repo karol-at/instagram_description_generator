@@ -56,6 +56,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            //TODO: decouple category adding from hashtag adding
             showDialog(context: context, builder: (context) => SimpleDialog(
               title: const Text('Add a new hashtag'),
               contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
@@ -143,7 +144,10 @@ class HashtagBox extends StatelessWidget {
         child: ElevatedButton(
           //TODO: add remove buttton
           style: ElevatedButton.styleFrom(
-            backgroundColor: state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.secondaryContainer : theme.colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).brightness == Brightness.light ?
+            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
+            : 
+            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
           ),
           onPressed: (){
             state.checkHahstag(hashtag);
