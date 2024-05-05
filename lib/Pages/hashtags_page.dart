@@ -30,9 +30,9 @@ class _HashtagsPageState extends State<HashtagsPage> {
             
             Expanded(
               child: ListView.builder(
-                itemCount: state.dataHandler.categoryList.length,
+                itemCount: state.dataHandler.categoryList.length + 1,
                 itemBuilder: (context, index) {
-                  return Stack(
+                  return index < state.dataHandler.categoryList.length ? Stack(
                     children: [
                       Card(
                         margin: const EdgeInsets.all(10),
@@ -93,7 +93,10 @@ class _HashtagsPageState extends State<HashtagsPage> {
                         ),
                       ),
                     ],
-                  );
+                  ):
+                  const SizedBox(height: 80)
+                  ;
+                  
                 },
               ),
             ),
