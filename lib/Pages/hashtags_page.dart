@@ -2,6 +2,7 @@ library hashtags_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
+import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
 
 class HashtagsPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                         Wrap(
                           children: [
                             for (String hashtag in state.dataHandler.hashtagList[index])
-                              HashtagBox(hashtag: hashtag),
+                              HashtagBox(hashtag: hashtag, index: index),
                           ],
                         ),
                       ],
@@ -130,10 +131,11 @@ class HashtagBox extends StatelessWidget {
   const HashtagBox({
     super.key,
     required this.hashtag,
+    required this.index,
   });
 
   final String hashtag;
-
+  final int index;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -141,21 +143,53 @@ class HashtagBox extends StatelessWidget {
     return Consumer<MyAppState>(
       builder: (context, state, child) => Padding(
         padding: const EdgeInsets.all(5),
-        child: ElevatedButton(
-          //TODO: add remove buttton
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).brightness == Brightness.light ?
-            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
-            : 
-            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
-          ),
-          onPressed: (){
-            state.checkHahstag(hashtag);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('#$hashtag'),
-          ),
+        child: Row(
+          children: [
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: theme.brightness == Brightness.light ?
+                state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
+                : 
+                state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(20),
+                    right: Radius.circular(0),
+                  ),
+                ),
+              ),
+              onPressed: (){
+                state.checkHahstag(hashtag);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('#$hashtag'),
+              ),
+            ),
+            FilledButton(
+              onPressed: (){
+                state.dataHandler.hashtagList[index].remove(hashtag);
+                state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
+                state.descriptionCreator.hashtags.remove(hashtag);
+                if (state.dataHandler.hashtagList[index].isEmpty) {
+                  state.dataHandler.categoryList.removeAt(index);
+                  state.dataHandler.hashtagList.removeAt(index);
+                  state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
+                }
+                state.rerender();
+              },
+              style: FilledButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(0),
+                    right: Radius.circular(20),
+                  ),
+                ),
+                backgroundColor: theme.colorScheme.error,
+                foregroundColor: theme.colorScheme.onError,
+              ),
+            child: const Icon(IconicIcons.trash),)
+          ],
         ),
       ),
     );
