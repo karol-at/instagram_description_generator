@@ -66,7 +66,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                                   TextField(
                                     decoration: const InputDecoration(
                                       hintText: 'Hashtag',
-                                      prefix: SizedBox(width: 15, child: Text('#')),
+                                      prefix: SizedBox(width: 10, child: Text('#')),
                                     ),
                                     controller: hashtagController,
                                   ),
@@ -108,11 +108,12 @@ class _HashtagsPageState extends State<HashtagsPage> {
                 TextField(
                   decoration: const InputDecoration(
                     hintText: 'New category',
-                    prefix: SizedBox(width: 15),
+                    prefix: SizedBox(width: 10),
                   ),
                   controller: categoryController,
                 ), 
                 TextButton(onPressed: (){
+                  //TODO: Make it imposisble to add empty categories
                   if (categoryController.text.isEmpty) {
                     return;
                   }
@@ -121,6 +122,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                     state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
                     state.dataHandler.hashtagList.add([]);
                   }
+                  categoryController.clear();
                   Navigator.of(context).pop();
                   setState(() {
                     
@@ -155,9 +157,11 @@ class HashtagBox extends StatelessWidget {
       builder: (context, state, child) => Padding(
         padding: const EdgeInsets.all(5),
         child: Row(
+          //TODO: Make the delete button correct size, make these things wrap again (with a container around them?)
           children: [
             FilledButton(
               style: FilledButton.styleFrom(
+                //TODO: Figure out how to make nice colors
                 backgroundColor: theme.brightness == Brightness.light ?
                 state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
                 : 
