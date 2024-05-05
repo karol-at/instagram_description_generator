@@ -37,4 +37,8 @@ class MyAppState extends ChangeNotifier{
     }
     notifyListeners();
   }
+
+  void rerender() {
+    notifyListeners();
+  }
 }
