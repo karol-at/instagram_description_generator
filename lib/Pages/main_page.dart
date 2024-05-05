@@ -3,6 +3,7 @@ library main_page;
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   final int dropdownValue = 0;
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: TextField(
-                  controller: titleController,
+                  controller: state.titleController,
                   decoration: const InputDecoration(
                     hintText: 'Title'
       
@@ -84,13 +85,32 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: TextField(
-                  controller: TextEditingController(text: state.descriptionCreator.description),
-                  maxLines: 10,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Description',
-                  ),
+                child: Stack(
+                  children: [
+                    
+                    TextField(
+                      controller: TextEditingController(text: state.descriptionCreator.description),
+                      maxLines: 10,
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        hintText: 'Description',
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: state.descriptionCreator.description));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Description copied to clipboard'),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.copy),
+                      ),
+                      ),
+                  ],
                 ),
               )
             ],
