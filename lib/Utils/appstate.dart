@@ -23,8 +23,9 @@ class MyAppState extends ChangeNotifier{
   //TODO: Save selected color
   Color color = Colors.yellow;
   Brightness brightness = Brightness.dark;
-
+  
   void setColor(Color color) {
+    this.color = color;
     themeData = ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(seedColor: color, brightness: brightness),

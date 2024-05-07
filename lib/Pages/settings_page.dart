@@ -38,13 +38,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 FilledButton(
                   child: const Text('Change color'),
                   onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const ColorPopup();
-                    },
-                  );
-                }, )
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const ColorPopup();
+                      },
+                    );
+                  }, 
+                ),
+                Switch(value: state.brightness == Brightness.dark, onChanged: (newValue){
+                  state.brightness = newValue ? Brightness.dark : Brightness.light;
+                  setState(() {
+                    state.themeData = ThemeData(
+                      colorScheme: ColorScheme.fromSeed(seedColor: state.color, brightness: state.brightness)
+                    );
+                    state.rerender();
+                  });
+                })
               ],
             ),
             SizedBox(
