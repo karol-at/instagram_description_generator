@@ -87,29 +87,36 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: Stack(
                   children: [
-                    
-                    TextField(
-                      controller: TextEditingController(text: state.descriptionCreator.description),
-                      maxLines: 10,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Description',
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.topRight,
-                      child: IconButton(
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(text: state.descriptionCreator.description));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Description copied to clipboard'),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.copy),
+                      child: Padding(
+                        padding: const EdgeInsets.all(11.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: state.descriptionCreator.description));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Description copied to clipboard'),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.copy),
+                        ),
                       ),
                       ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: TextEditingController(text: state.descriptionCreator.description),
+                        maxLines: 10,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Description',
+                          border: OutlineInputBorder()
+                        ),
+                      ),
+                    ),
+                    
                   ],
                 ),
               )
