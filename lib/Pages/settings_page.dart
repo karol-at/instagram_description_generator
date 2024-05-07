@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
 import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:instagram_description_generator/widgets/stylepopups.dart';
 
 
 class SettingsPage extends StatefulWidget {
@@ -19,14 +20,6 @@ class _SettingsPageState extends State<SettingsPage> {
   TextEditingController newLens = TextEditingController();
   String? removeCamera;
   String? removeLens;
-  final List<DropdownMenuItem<String>> colors = [
-  const DropdownMenuItem<String>(value: 'orange',child: Text('Orange')),
-  const DropdownMenuItem<String>(value: 'blue',child: Text('Blue')),
-  const DropdownMenuItem<String>(value: 'green',child: Text('Green')),
-  const DropdownMenuItem<String>(value: 'red',child: Text('Red')),
-  const DropdownMenuItem<String>(value: 'yellow',child: Text('Yellow')),
-  const DropdownMenuItem<String>(value: 'purple',child: Text('Purple')),
-  ];
   String? color;
 
   @override
@@ -39,6 +32,21 @@ class _SettingsPageState extends State<SettingsPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Text('Change app theme'),
+            Row(
+              children: [
+                FilledButton(
+                  child: const Text('Change color'),
+                  onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const ColorPopup();
+                    },
+                  );
+                }, )
+              ],
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width > 500 ? 500 : MediaQuery.of(context).size.width,
               child: Padding(
@@ -179,57 +187,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             ),
-          DropdownButton(
-            items: colors, 
-            hint: const Text('Select a color'),
-            value: color,
-            onChanged: (String? newValue) {
-              color = newValue;
-            switch (newValue) {
-              
-              case 'orange':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange)
-                );
-                break;
-              case 'blue':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)
-                );
-                break;
-              case 'green':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)
-                );
-                break;
-              case 'red':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.red)
-                );
-                break;
-              case 'yellow':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow)
-                );
-                break;
-              case 'purple':
-                state.themeData = ThemeData(
-                  useMaterial3: true,
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple)
-                );
-                break;
-            }
-            //TODO: make the color change responsive
-            setState(() {
-              
-            });
-            }
-          )
           ],
         ),
       ),
