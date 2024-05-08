@@ -36,20 +36,24 @@ class _HashtagsPageState extends State<HashtagsPage> {
                     children: [
                       Card(
                         margin: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(10),
-                              child: Text(state.dataHandler.categoryList[index], style: Theme.of(context).textTheme.titleMedium,)
-                            ),
-                            Wrap(
-                              children: [
-                                for (String hashtag in state.dataHandler.hashtagList[index])
-                                  HashtagBox(hashtag: hashtag, index: index),
-                              ],
-                            ),
-                          ],
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.fromLTRB(3, 0, 0, 7),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(10),
+                                child: Text(state.dataHandler.categoryList[index], style: Theme.of(context).textTheme.titleMedium,)
+                              ),
+                              Wrap(
+                                children: [
+                                  for (String hashtag in state.dataHandler.hashtagList[index])
+                                    HashtagBox(hashtag: hashtag, index: index),
+                                ],
+                              ),
+                            ],
+                          ),
                         )
                       ),
                       Align(
@@ -159,55 +163,40 @@ class HashtagBox extends StatelessWidget {
     return Consumer<MyAppState>(
       builder: (context, state, child) => Padding(
         padding: const EdgeInsets.all(5),
-        child: Row(
-          //TODO: Make the delete button correct size, make these things wrap again (with a container around them?)
-          children: [
-            FilledButton(
-              style: FilledButton.styleFrom(
-                //TODO: Figure out how to make nice colors
-                backgroundColor: theme.brightness == Brightness.light ?
-                state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
-                : 
-                state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(20),
-                    right: Radius.circular(0),
-                  ),
-                ),
-              ),
-              onPressed: (){
-                state.checkHahstag(hashtag);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('#$hashtag'),
-              ),
-            ),
-            FilledButton(
-              onPressed: (){
-                state.dataHandler.hashtagList[index].remove(hashtag);
-                state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
-                state.descriptionCreator.hashtags.remove(hashtag);
-                if (state.dataHandler.hashtagList[index].isEmpty) {
-                  state.dataHandler.categoryList.removeAt(index);
-                  state.dataHandler.hashtagList.removeAt(index);
-                  state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
-                }
-                state.rerender();
-              },
-              style: FilledButton.styleFrom(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(0),
-                    right: Radius.circular(20),
-                  ),
-                ),
-                backgroundColor: theme.colorScheme.error,
-                foregroundColor: theme.colorScheme.onError,
-              ),
-            child: const Icon(IconicIcons.trash),)
-          ],
+        child: FilledButton(
+          style: FilledButton.styleFrom(
+            //TODO: Figure out how to make nice colors
+            backgroundColor: theme.brightness == Brightness.light ?
+            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
+            : 
+            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
+          ),
+          onPressed: (){
+            state.checkHahstag(hashtag);
+          },
+          onLongPress: () {
+            showMenu(context: context, position: RelativeRect.fill, items: [
+              PopupMenuItem(
+                child: const Text('Remove'),
+                onTap: () {
+                  state.dataHandler.hashtagList[index].remove(hashtag);
+            state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
+            state.descriptionCreator.hashtags.remove(hashtag);
+            if (state.dataHandler.hashtagList[index].isEmpty) {
+              state.dataHandler.categoryList.removeAt(index);
+              state.dataHandler.hashtagList.removeAt(index);
+              state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
+            }
+            state.rerender();
+                },
+              )
+            ]);
+        
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('#$hashtag'),
+          ),
         ),
       ),
     );
