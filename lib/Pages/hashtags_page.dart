@@ -2,7 +2,6 @@ library hashtags_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
-import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
 
 class HashtagsPage extends StatefulWidget {
@@ -120,7 +119,6 @@ class _HashtagsPageState extends State<HashtagsPage> {
                   controller: categoryController,
                 ), 
                 TextButton(onPressed: (){
-                  //TODO: Make it imposisble to add empty categories
                   if (categoryController.text.isEmpty) {
                     return;
                   }
@@ -148,12 +146,13 @@ class _HashtagsPageState extends State<HashtagsPage> {
 }
 
 class HashtagBox extends StatelessWidget {
-  const HashtagBox({
+  HashtagBox({
     super.key,
     required this.hashtag,
     required this.index,
   });
 
+  final MenuController menuController = MenuController();
   final String hashtag;
   final int index;
   @override
@@ -161,41 +160,44 @@ class HashtagBox extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Consumer<MyAppState>(
-      builder: (context, state, child) => Padding(
-        padding: const EdgeInsets.all(5),
-        child: FilledButton(
-          style: FilledButton.styleFrom(
-            //TODO: Figure out how to make nice colors
-            backgroundColor: theme.brightness == Brightness.light ?
-            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
-            : 
-            state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
+      builder: (context, state, child) => MenuAnchor(
+        menuChildren: [
+          MenuItemButton(
+            child: const Text('Remove'),
+            onPressed: () {
+              state.dataHandler.hashtagList[index].remove(hashtag);
+              state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
+              state.descriptionCreator.hashtags.remove(hashtag);
+              if (state.dataHandler.hashtagList[index].isEmpty) {
+                state.dataHandler.categoryList.removeAt(index);
+                state.dataHandler.hashtagList.removeAt(index);
+                state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
+              }
+              state.rerender();
+            },
           ),
-          onPressed: (){
-            state.checkHahstag(hashtag);
-          },
-          onLongPress: () {
-            showMenu(context: context, position: RelativeRect.fill, items: [
-              PopupMenuItem(
-                child: const Text('Remove'),
-                onTap: () {
-                  state.dataHandler.hashtagList[index].remove(hashtag);
-            state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
-            state.descriptionCreator.hashtags.remove(hashtag);
-            if (state.dataHandler.hashtagList[index].isEmpty) {
-              state.dataHandler.categoryList.removeAt(index);
-              state.dataHandler.hashtagList.removeAt(index);
-              state.dataHandler.saveList(state.dataHandler.categoryList, 'categoryList');
-            }
-            state.rerender();
-                },
-              )
-            ]);
-        
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('#$hashtag'),
+        ],
+        builder: (context, menuController, child) => Padding(
+          padding: const EdgeInsets.all(5),
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              //TODO: Figure out how to make nice colors
+              backgroundColor: theme.brightness == Brightness.light ?
+              state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
+              : 
+              state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
+            ),
+            onPressed: (){
+              state.checkHahstag(hashtag);
+            },
+            onLongPress: () {
+              menuController.open();
+          
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('#$hashtag'),
+            ),
           ),
         ),
       ),
