@@ -1,6 +1,7 @@
 library appstate;
 
 import 'package:flutter/material.dart';
+import 'package:instagram_description_generator/Utils/config.dart';
 import 'package:instagram_description_generator/Utils/description_creator.dart';
 import 'package:instagram_description_generator/Utils/list_loader.dart';
 
@@ -14,21 +15,17 @@ class MyAppState extends ChangeNotifier{
     hashtags: [],
   );
   TextEditingController titleController = TextEditingController();
-  //TODO: change this to load on app initialization
-  ThemeData themeData = ThemeData(
-    useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow, brightness: Brightness.dark),
-  );
+  Config config = Config();
+  ThemeData themeData = ThemeData();
+  //TODO: get rid of this and use appColors from config
   final List<String> colors = ['orange', 'blue', 'green', 'red', 'yellow', 'purple'];
-  //TODO: Save selected color
-  Color color = Colors.yellow;
-  Brightness brightness = Brightness.dark;
   
-  void setColor(Color color) {
-    this.color = color;
+  void setColor(String color) {
+    config.color = color;
+    config.saveConfig();
     themeData = ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: color, brightness: brightness),
+      colorScheme: ColorScheme.fromSeed(seedColor: appColors[color]!, brightness: config.brightness? Brightness.dark: Brightness.light),
     );
     notifyListeners();
   }
@@ -41,6 +38,11 @@ class MyAppState extends ChangeNotifier{
 
   void loadData() async {
     await dataHandler.loadAllLists();
+    await config.loadConfig();
+    themeData = ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(seedColor: appColors[config.color]!, brightness: config.brightness? Brightness.dark: Brightness.light),
+    );
     notifyListeners();
   }
 
@@ -55,29 +57,5 @@ class MyAppState extends ChangeNotifier{
 
   void rerender() {
     notifyListeners();
-  }
-
-  void changeColor(String color)
-  {
-    switch (color) {
-      case 'orange':
-        setColor(Colors.orange);
-        break;
-      case 'blue':
-        setColor(Colors.blue);
-        break;
-      case 'green':
-        setColor(Colors.green);
-        break;
-      case 'red':
-        setColor(Colors.red);
-        break;
-      case 'yellow':
-        setColor(Colors.yellow);
-        break;
-      case 'purple':  
-        setColor(Colors.purple);
-        break; 
-      }
   }
 }

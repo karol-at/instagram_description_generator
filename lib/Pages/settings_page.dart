@@ -2,6 +2,7 @@ library settings_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
+import 'package:instagram_description_generator/Utils/config.dart';
 import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:instagram_description_generator/widgets/stylepopups.dart';
@@ -46,15 +47,19 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
                   }, 
                 ),
-                Switch(value: state.brightness == Brightness.dark, onChanged: (newValue){
-                  state.brightness = newValue ? Brightness.dark : Brightness.light;
-                  setState(() {
-                    state.themeData = ThemeData(
-                      colorScheme: ColorScheme.fromSeed(seedColor: state.color, brightness: state.brightness)
-                    );
-                    state.rerender();
-                  });
-                })
+                Switch(
+                  value: state.config.brightness, 
+                  onChanged: (newValue){
+                    state.config.brightness = newValue;
+                    setState(() {
+                      state.themeData = ThemeData(
+                        colorScheme: ColorScheme.fromSeed(seedColor: appColors[state.config.color]!, brightness: newValue? Brightness.dark: Brightness.light)
+                      );
+                      state.rerender();
+                    });
+                    state.config.saveConfig();
+                  }
+                )
               ],
             ),
             SizedBox(

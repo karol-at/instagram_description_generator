@@ -22,7 +22,7 @@ class ColorPopup extends StatelessWidget {
               itemBuilder: (context, index) => ListTile(
                 title: Text(state.colors[index]),
                 onTap:() {
-                  state.changeColor(state.colors[index]);
+                  state.setColor(state.colors[index]);
                   Navigator.pop(context);
                 },
               ),
