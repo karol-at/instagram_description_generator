@@ -17,18 +17,22 @@ class MyAppState extends ChangeNotifier{
   TextEditingController titleController = TextEditingController();
   Config config = Config();
   ThemeData themeData = ThemeData();
+  ThemeData negThemeData = ThemeData();
   final List<String> colors = appColors.keys.toList();
   
-  void setColor(String color) {
-    config.color = color;
-    config.saveConfig();
+  
+  void changeTheme() {
     themeData = ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: appColors[color]!, brightness: config.brightness? Brightness.dark: Brightness.light),
+      colorScheme: ColorScheme.fromSeed(seedColor: appColors[config.color]!, brightness: config.brightness? Brightness.dark: Brightness.light),
+    );
+    negThemeData = ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(seedColor: appColors[config.color]!, brightness: config.brightness? Brightness.light: Brightness.dark),
     );
     notifyListeners();
   }
-      
+    
     
 
   MyAppState() {
@@ -38,11 +42,7 @@ class MyAppState extends ChangeNotifier{
   void loadData() async {
     await dataHandler.loadAllLists();
     await config.loadConfig();
-    themeData = ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: appColors[config.color]!, brightness: config.brightness? Brightness.dark: Brightness.light),
-    );
-    notifyListeners();
+    changeTheme();
   }
 
   void checkHahstag(String hashtag) {
