@@ -17,8 +17,7 @@ class MyAppState extends ChangeNotifier{
   TextEditingController titleController = TextEditingController();
   Config config = Config();
   ThemeData themeData = ThemeData();
-  //TODO: get rid of this and use appColors from config
-  final List<String> colors = ['orange', 'blue', 'green', 'red', 'yellow', 'purple'];
+  final List<String> colors = appColors.keys.toList();
   
   void setColor(String color) {
     config.color = color;
