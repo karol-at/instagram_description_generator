@@ -1,7 +1,6 @@
 library settings_page;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
 import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
