@@ -29,59 +29,7 @@ class _TagsPageState extends State<TagsPage> {
             Expanded(
               child: ListView.builder(
                 itemCount: state.dataHandler.tagsList.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        Expanded(child: Text('@${state.dataHandler.tagsList[index].tag} | #${state.dataHandler.tagsList[index].hashtag}'),),
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                ),
-                                color: state.themeData.colorScheme.errorContainer,
-                              ),
-                              height: 40,
-                              child: IconButton(
-                                icon: const Icon(IconicIcons.trash),
-                                color: state.themeData.colorScheme.onErrorContainer,
-                                onPressed: () {
-                                  state.dataHandler.tagsList.removeAt(index);
-                                  state.dataHandler.saveTagsList();
-                                  setState(() {});
-                                },
-                              ),
-                            ),
-                            Container(
-                              //TODO: figure out nice selection icons withouth the checkbox
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                                color: state.themeData.colorScheme.primaryContainer,
-                              ),
-                              height: 40,
-                              child: Checkbox(value: state.dataHandler.tagsList[index].selected,
-                                onChanged: (bool? value) {                             
-                                  setState(() {
-                                    state.dataHandler.tagsList[index].selected = value!;
-                                    state.descriptionCreator.tags.contains(state.dataHandler.tagsList[index]) ?
-                                    state.descriptionCreator.tags.remove(state.dataHandler.tagsList[index]) :
-                                    state.descriptionCreator.tags.add(state.dataHandler.tagsList[index]);
-                                  });
-                                }
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
+                itemBuilder: (context, index) => TagElement(index: index, context: context,)
               ),
             ),
           ],
@@ -122,6 +70,69 @@ class _TagsPageState extends State<TagsPage> {
           child: const Icon(Icons.add),
         ),
       ),
+    );
+  }
+}
+
+class TagElement extends StatelessWidget {
+  const TagElement({super.key, required this.index, required this.context});
+  final int index;
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Consumer<MyAppState>(
+        builder: (context, state, child) => Row(
+          children: [
+            Expanded(child: Text('@${state.dataHandler.tagsList[index].tag} | #${state.dataHandler.tagsList[index].hashtag}'),),
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    color: state.themeData.colorScheme.errorContainer,
+                  ),
+                  height: 40,
+                  child: IconButton(
+                    icon: const Icon(IconicIcons.trash),
+                    color: state.themeData.colorScheme.onErrorContainer,
+                    onPressed: () {
+                      state.dataHandler.tagsList.removeAt(index);
+                      state.dataHandler.saveTagsList();
+                      state.rerender();
+                    },
+                  ),
+                ),
+                Container(
+                  //TODO: figure out nice selection icons withouth the checkbox
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    color: state.themeData.colorScheme.primaryContainer,
+                  ),
+                  height: 40,
+                  child: Checkbox(value: state.dataHandler.tagsList[index].selected,
+                    onChanged: (bool? value) {                             
+                      
+                        state.dataHandler.tagsList[index].selected = value!;
+                        state.descriptionCreator.tags.contains(state.dataHandler.tagsList[index]) ?
+                        state.descriptionCreator.tags.remove(state.dataHandler.tagsList[index]) :
+                        state.descriptionCreator.tags.add(state.dataHandler.tagsList[index]);
+                      state.rerender();
+                    }
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      )
     );
   }
 }
