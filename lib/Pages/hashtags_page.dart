@@ -157,7 +157,6 @@ class HashtagBox extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
 
     return Consumer<MyAppState>(
       builder: (context, state, child) => MenuAnchor(
@@ -181,11 +180,12 @@ class HashtagBox extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: FilledButton(
             style: FilledButton.styleFrom(
-              //TODO: Figure out how to make nice colors
-              backgroundColor: theme.brightness == Brightness.light ?
-              state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.tertiaryContainer : theme.colorScheme.primaryContainer
-              : 
-              state.descriptionCreator.hashtags.contains(hashtag) ? theme.colorScheme.primaryContainer : theme.colorScheme.tertiaryContainer,
+              backgroundColor: state.descriptionCreator.hashtags.contains(hashtag) ? 
+              state.themeData.colorScheme.secondary : 
+              state.negThemeData.colorScheme.secondary,
+              foregroundColor: state.descriptionCreator.hashtags.contains(hashtag) ?
+              state.themeData.colorScheme.onSecondary :
+              state.negThemeData.colorScheme.onSecondary,
             ),
             onPressed: (){
               state.checkHahstag(hashtag);

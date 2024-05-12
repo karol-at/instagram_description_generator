@@ -7,7 +7,6 @@ import 'dart:io';
 
 class Config{
   bool brightness = true;
-  //TODO: create colors enum
   String color = 'yellow';
 
   Future<void> loadConfig() async {
