@@ -108,7 +108,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showDialog(context: context, builder: (context) => SimpleDialog(
-              title: const Text('Add a new hashtag'),
+              title: const Text('Add a new category'),
               contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               children: [
                 TextField(
