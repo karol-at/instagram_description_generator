@@ -22,6 +22,10 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "Icons/appIcon.png"
+  windows:
+    generate: true
+    image_path: "Icons/appIcon.png"
+    icon_size: 128
 
 flutter:
   uses-material-design: true

@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="200.13652mm"
+   height="200.13652mm"
+   viewBox="0 0 200.13652 200.13652"
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
@@ -27,8 +27,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.72426347"
-     inkscape:cx="474.27492"
-     inkscape:cy="363.81788"
+     inkscape:cx="457.70636"
+     inkscape:cy="209.17802"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -40,7 +40,14 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-4.2287979,-40.942818)">
+    <circle
+       style="fill:#91c48b;fill-opacity:1;stroke-width:3;stroke-linecap:round"
+       id="path2"
+       cx="104.29706"
+       cy="141.01108"
+       r="100.06826" />
     <rect
        style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:8;stroke-dasharray:none;stroke-opacity:1"
        id="rect1"
@@ -82,7 +89,7 @@
        d="m 149.94504,102.85426 a 7.4911566,7.4911566 0 0 1 -7.40419,7.49066 7.4911566,7.4911566 0 0 1 -7.5761,-7.31674 7.4911566,7.4911566 0 0 1 7.22829,-7.66053 7.4911566,7.4911566 0 0 1 7.74393,7.13887"
        sodipodi:open="true" />
     <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-dasharray:none;stroke-opacity:1;stroke-linecap:round"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        d="m 58.450183,163.66051 c 34.339485,0 34.339485,0 34.339485,0"
        id="path7" />
     <path
