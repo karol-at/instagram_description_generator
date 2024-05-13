@@ -2,7 +2,6 @@ library tags_page;
 
 import 'package:flutter/material.dart';
 import 'package:instagram_description_generator/Utils/appstate.dart';
-import 'package:instagram_description_generator/fonts/iconic_icons.dart';
 import 'package:provider/provider.dart';
 
 class TagsPage extends StatefulWidget {
@@ -75,62 +74,68 @@ class _TagsPageState extends State<TagsPage> {
 }
 
 class TagElement extends StatelessWidget {
-  const TagElement({super.key, required this.index, required this.context});
+  TagElement({super.key, required this.index, required this.context});
   final int index;
   final BuildContext context;
+  final MenuController controller = MenuController();
+
 
   @override
   Widget build(BuildContext context) {
+    final Color uncheckedColor = Theme.of(context).colorScheme.secondary;
+    final Color checkedColor = Theme.of(context).colorScheme.primary;
     return ListTile(
       title: Consumer<MyAppState>(
-        builder: (context, state, child) => Row(
-          children: [
-            Expanded(child: Text('@${state.dataHandler.tagsList[index].tag} | #${state.dataHandler.tagsList[index].hashtag}'),),
-              Row(
+        builder: (context, state, child) => GestureDetector(
+          onTap: (){
+            state.dataHandler.tagsList[index].selected = !state.dataHandler.tagsList[index].selected;
+            state.rerender();
+          },
+          onLongPress: () => controller.open(),
+          child: MenuAnchor(
+            menuChildren: [
+              MenuItemButton(
+                child: const Text('Remove'), 
+                onPressed: () {
+                  state.dataHandler.tagsList.removeAt(index);
+                  state.dataHandler.saveTagsList();
+                  state.rerender();
+                },
+              ),
+            ],
+            controller: controller,
+            child: state.dataHandler.tagsList[index].selected ?  Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: checkedColor, width: 3),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
-                    color: state.themeData.colorScheme.errorContainer,
+                  Text('@${state.dataHandler.tagsList[index].tag}', style: TextStyle(color: checkedColor, fontSize: 20, fontWeight: FontWeight.w500),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [Icon(Icons.check, color: checkedColor,)],
                   ),
-                  height: 40,
-                  child: IconButton(
-                    icon: const Icon(IconicIcons.trash),
-                    color: state.themeData.colorScheme.onErrorContainer,
-                    onPressed: () {
-                      state.dataHandler.tagsList.removeAt(index);
-                      state.dataHandler.saveTagsList();
-                      state.rerender();
-                    },
-                  ),
-                ),
-                Container(
-                  //TODO: figure out nice selection icons withouth the checkbox
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
-                    color: state.themeData.colorScheme.primaryContainer,
-                  ),
-                  height: 40,
-                  child: Checkbox(value: state.dataHandler.tagsList[index].selected,
-                    onChanged: (bool? value) {                             
-                      
-                        state.dataHandler.tagsList[index].selected = value!;
-                        state.descriptionCreator.tags.contains(state.dataHandler.tagsList[index]) ?
-                        state.descriptionCreator.tags.remove(state.dataHandler.tagsList[index]) :
-                        state.descriptionCreator.tags.add(state.dataHandler.tagsList[index]);
-                      state.rerender();
-                    }
-                  ),
-                )
-              ],
+                ],
+              ),
             )
-          ],
+            : Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: uncheckedColor.withOpacity(0.3), width: 3),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Text('@${state.dataHandler.tagsList[index].tag}', style: TextStyle(color: uncheckedColor, fontSize: 20, fontWeight: FontWeight.w500),),
+                  
+                  
+                ],
+              ),
+            ),
+          ),
         ),
       )
     );
