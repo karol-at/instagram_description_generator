@@ -82,6 +82,7 @@ class _HashtagsPageState extends State<HashtagsPage> {
                                         state.dataHandler.hashtagList[index].add(hashtagController.text);
                                         state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
                                       }
+                                      hashtagController.clear();
                                       Navigator.of(context).pop();
                                       setState(() {
                                       
