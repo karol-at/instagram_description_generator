@@ -88,7 +88,12 @@ class TagElement extends StatelessWidget {
       title: Consumer<MyAppState>(
         builder: (context, state, child) => GestureDetector(
           onTap: (){
-            state.dataHandler.tagsList[index].selected = !state.dataHandler.tagsList[index].selected;
+            final element = state.dataHandler.tagsList[index];
+            if (state.descriptionCreator.tags.contains(element)) {
+              state.descriptionCreator.tags.remove(element);
+            } else {
+              state.descriptionCreator.tags.add(element);
+            }
             state.rerender();
           },
           onLongPress: () => controller.open(),
@@ -104,7 +109,7 @@ class TagElement extends StatelessWidget {
               ),
             ],
             controller: controller,
-            child: state.dataHandler.tagsList[index].selected ?  Container(
+            child: state.descriptionCreator.tags.contains(state.dataHandler.tagsList[index]) ?  Container(
               decoration: BoxDecoration(
                 border: Border.all(color: checkedColor, width: 3),
                 borderRadius: BorderRadius.circular(10),

@@ -95,7 +95,6 @@ class DataHandler{
 class Tag {
   String tag;
   String hashtag;
-  bool selected = false;
   Tag({required this.tag, this.hashtag = ''})
   {
     if (hashtag == '') {
