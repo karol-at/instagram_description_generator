@@ -78,8 +78,9 @@ class _HashtagsPageState extends State<HashtagsPage> {
                                       if (hashtagController.text.isEmpty) {
                                         return;
                                       }
-                                      if (!state.dataHandler.hashtagList[index].contains(hashtagController.text)) {
-                                        state.dataHandler.hashtagList[index].add(hashtagController.text);
+                                      String hashtag = hashtagController.text[0] == '#' ? hashtagController.text.substring(1) : hashtagController.text;
+                                      if (!state.dataHandler.hashtagList[index].contains(hashtag)) {
+                                        state.dataHandler.hashtagList[index].add(hashtag);
                                         state.dataHandler.saveList(state.dataHandler.hashtagList[index], state.dataHandler.categoryList[index]);
                                       }
                                       hashtagController.clear();
