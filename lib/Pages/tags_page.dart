@@ -103,6 +103,7 @@ class TagElement extends StatelessWidget {
                 child: const Text('Remove'), 
                 onPressed: () {
                   state.dataHandler.tagsList.removeAt(index);
+                  state.descriptionCreator.tags.remove(state.dataHandler.tagsList[index]);
                   state.dataHandler.saveTagsList();
                   state.rerender();
                 },
