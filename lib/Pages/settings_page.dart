@@ -88,6 +88,12 @@ class _SettingsPageState extends State<SettingsPage> {
                         height: 50,
                         child: IconButton(
                           onPressed: (){
+                            if(newCamera.text.isEmpty) {
+                              return;
+                            }
+                            if(!state.dataHandler.cameraList.contains(newCamera.text)){
+                              return;
+                            }
                             state.dataHandler.cameraList.add(newCamera.text);
                             state.dataHandler.saveList(state.dataHandler.cameraList, 'cameraList');
                             newCamera.clear();
@@ -158,9 +164,16 @@ class _SettingsPageState extends State<SettingsPage> {
                         height: 50,
                         child: IconButton(
                           onPressed: (){
+                            if(newLens.text.isEmpty) {
+                              return;
+                            }
+                            if(!state.dataHandler.lensList.contains(newLens.text)){
+                              return;
+                            }
                             state.dataHandler.lensList.add(newLens.text);
                             state.dataHandler.saveList(state.dataHandler.lensList, 'lensList');
                             newLens.clear();
+                            state.rerender();
                           },
                           icon: const Icon(Icons.add),
                           
@@ -180,7 +193,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       hint: const Text('Select a lens to remove'),
                       onChanged: (String? newValue) {
                         setState(() {
-                          removeCamera = newValue;
+                          removeLens = newValue;
                         });
                       },
                       items: state.dataHandler.lensList.map<DropdownMenuItem<String>>((String value) {
