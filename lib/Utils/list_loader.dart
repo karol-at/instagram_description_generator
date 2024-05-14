@@ -15,12 +15,16 @@ class DataHandler{
   List<List<String>> hashtagList = [];
 
   void addTag(TextEditingController tagController, TextEditingController relatedHashtagController) {
-    if (tagController.text.isNotEmpty) {
-      tagsList.add(Tag(tag: tagController.text, hashtag: relatedHashtagController.text));
-      saveTagsList();
-      tagController.clear();
-      relatedHashtagController.clear();
+    if (!tagController.text.isNotEmpty) {
+      return;
     }
+    String tag = tagController.text[0] == '@' ? tagController.text.substring(1) : tagController.text;
+    String hashtag = relatedHashtagController.text[0] == '#' ? relatedHashtagController.text.substring(1) : relatedHashtagController.text;
+    tagsList.add(Tag(tag: tag, hashtag: hashtag));
+    saveTagsList();
+    tagController.clear();
+    relatedHashtagController.clear();
+    
   }
 
   void saveList (List<String> list, String listName) async {
