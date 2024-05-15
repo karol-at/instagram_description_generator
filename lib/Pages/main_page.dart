@@ -87,6 +87,18 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: Stack(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: TextEditingController(text: state.descriptionCreator.description),
+                        maxLines: 10,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Description',
+                          border: OutlineInputBorder()
+                        ),
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -103,20 +115,7 @@ class _HomePageState extends State<HomePage> {
                           icon: const Icon(Icons.copy),
                         ),
                       ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: TextEditingController(text: state.descriptionCreator.description),
-                        maxLines: 10,
-                        readOnly: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Description',
-                          border: OutlineInputBorder()
-                        ),
-                      ),
                     ),
-                    
                   ],
                 ),
               )
