@@ -91,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             if(newCamera.text.isEmpty) {
                               return;
                             }
-                            if(!state.dataHandler.cameraList.contains(newCamera.text)){
+                            if(state.dataHandler.cameraList.contains(newCamera.text)){
                               return;
                             }
                             state.dataHandler.cameraList.add(newCamera.text);
@@ -167,7 +167,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             if(newLens.text.isEmpty) {
                               return;
                             }
-                            if(!state.dataHandler.lensList.contains(newLens.text)){
+                            if(state.dataHandler.lensList.contains(newLens.text)){
                               return;
                             }
                             state.dataHandler.lensList.add(newLens.text);
